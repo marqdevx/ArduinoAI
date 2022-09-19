@@ -358,6 +358,8 @@
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
 
+    const sensors = [115, 130, 131, 129, 128, 4, 13, 34];
+
     snack('IMPORTANT - first upload the Arduino_BHY2/app.ino sketch', 1)
     init3D();
 
@@ -392,19 +394,24 @@
                     console.log('ERROR: ' + error);
                 })
                 .then(_ => {
-                    sensorTypesLen = Object.keys(sensorTypes).length;
-                    startSensor(115)
-                    startSensor(130)
-                    startSensor(131)
-                    startSensor(128)
-                    startSensor(129)
-                    startSensor(4)
-                    startSensor(13)
-                    startSensor(34) //quaternion
+
+                    for (var i = 0; i < sensors.length; i++) {
+                        console.log(sensors[i])
+                        startSensor(sensors[i])
+                        setTimeout(() => {
+                            console.log("Delayed for 1 second.")
+                            initializeSensor();
+                            sensorsInitialized++;
+                        }, 4000 + 500 * i)
+                    }
                 });
         }
     });
 
+    var sensorsInitialized = 0;
+    function initializeSensor() {
+        enableSensor(sensors[sensorsInitialized]);
+    }
     function floatToBytes(value) {
         var tempArray = new Float32Array(1);
         tempArray[0] = value;
@@ -577,7 +584,7 @@
     function enableSensor(id) {
         var configPacket = new Uint8Array(9);
         configPacket[0] = id;
-        console.log("Enable sensor ", sensorTypes[id].name);
+        console.log("Enable sensor ", id);
         configPacket.set(floatToBytes(1), 1);
         console.log(configPacket);
         sensorConfigCharacteristic.writeValue(configPacket)
@@ -588,8 +595,8 @@
 
     function startSensor(sensorID, rate, latency) {
         console.log("Starting sensor " + sensorTypes[sensorID].name);
-        disableSensor(sensorID);
         configureSensor(sensorID, rate, latency);
+        disableSensor(sensorID);
 
         enableSensor(sensorID);
         tableInsert(sensorID);
