@@ -10,6 +10,9 @@
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js"></script>
+    <script src="GLTFLoader.js"></script>
+
     <title>Sensor page</title>
 </head>
 
@@ -346,7 +349,13 @@
     const pairButton = document.getElementById('pairButton');
     const BLEstatus = document.getElementById('bluetooth');
 
+    // 3d model
+    var renderer = new THREE.WebGLRenderer();
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
+
     snack('IMPORTANT - first upload the Arduino_BHY2/app.ino sketch', 1)
+    init3D();
 
     fetch("./parse-scheme.json")
         .then(response => response.json())
@@ -387,6 +396,7 @@
                     startSensor(129)
                     startSensor(4)
                     startSensor(13)
+                    startSensor(34) //quaternion
                 });
         }
     });
@@ -894,7 +904,7 @@
 
                     iaqDivValue.innerHTML = val2;
                     Plotly.extendTraces(iaqDiv, { y: [[val2]] }, [0]);
-                    
+
                     co2DivValue.innerHTML = val4;
                     Plotly.extendTraces(co2Div, { y: [[val4]] }, [0]);
 
@@ -916,7 +926,108 @@
                 }
 
             }
+            else if (sensorTypes[sensor].scheme == "quaternion") {
+                //Parse BSEC values
+                const BSECValues = parsedStringValue.split(" ");
+                //console.log("Split: ", BSECValues);
+
+                var x = BSECValues[1];   //iaq
+                var y = BSECValues[5];   //iaq-s
+                var z = BSECValues[9];   //b-voc-eq
+                var w = BSECValues[13];  //co2-eq
+
+                var divX = document.getElementById("xQuaternion");
+                var divY = document.getElementById("yQuaternion");
+                var divZ = document.getElementById("zQuaternion");
+
+                update3d(x, y, z, w)
+
+
+
+            }
         }
+    }
+
+
+    function init3D() {
+        var container = document.getElementById('3d');
+        var loader = new THREE.GLTFLoader();
+        var canvasDigits = document.getElementById('canvasDigits');
+        scene.background = new THREE.Color(0x58585A);
+        renderer.setSize(177, 177);
+
+        renderer.setPixelRatio(4);
+
+        container.insertBefore(renderer.domElement, canvasDigits);
+        renderer.domElement.style.margin = "9px";
+        loader.load('models/niclaSenseME.glb',
+            // called when the Arduinio model is loaded
+            function (gltf) {
+                // Model
+                arduinoModel = gltf.scene;
+                scene.add(arduinoModel);
+
+                // LED
+                var geometry = new THREE.BoxGeometry(1, 1, 1);
+                ledMaterial = new THREE.MeshBasicMaterial({ color: 0x111111 });
+                ledObject = new THREE.Mesh(geometry, ledMaterial);
+                ledObject.position.set(9, -10, -1);
+
+                ledLight = new THREE.PointLight(0x111111, 3, 40);
+                ledLight.color.setRGB(0, 255, 0);
+                ledLight.position.set(9, -10, -1.2);
+
+                ledMaterial.color.setRGB(0, 255, 0);
+
+                arduinoModel.add(ledObject);
+                arduinoModel.add(ledLight);
+
+                arduinoModel.rotation.x = 90 * (Math.PI / 180);  // Show the bottom side of the board by default
+
+                var sphereSize = 1;
+
+                // Light
+                const color = 0xFFFFFF;
+                const intensity = 1;
+                const light = new THREE.DirectionalLight(color, intensity);
+                light.position.set(-20, 100, -10);
+                light.target.position.set(0, 0, 0);
+                scene.add(light);
+                scene.add(light.target);
+                var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
+                scene.add(hemiLight);
+
+                // Camera
+                camera.position.set(0, 25, 0);
+                camera.rotation.y = Math.PI; // 180
+                camera.lookAt(new THREE.Vector3(0, 0, 0));
+                renderer.render(scene, camera);
+            }
+        );
+    }
+    function update3d(x, y, z, w) {
+        // Construct the quaternion object with the values and apply that to the 3D model
+        const quaternion = new THREE.Quaternion(x, y, z, w);
+        quaternion.normalize();
+        arduinoModel.setRotationFromQuaternion(quaternion);
+
+        renderer.render(scene, camera);
+
+        // Euler conversion, show the degrees below the 3D model
+        var rotation = new THREE.Euler().setFromQuaternion(quaternion, 'XYZ');
+
+        document.getElementById('xQuaternion').innerHTML = "x: " + Math.round(rotation.x * 180 / Math.PI + 180);
+        document.getElementById('yQuaternion').innerHTML = "y: " + Math.round(rotation.y * 180 / Math.PI + 180);
+        document.getElementById('zQuaternion').innerHTML = "z: " + Math.round(rotation.z * 180 / Math.PI + 180);
+
+        renderer.render(scene, camera);
+
+        // Euler conversion, show the degrees below the 3D model
+        var rotation = new THREE.Euler().setFromQuaternion(quaternion, 'XYZ');
+
+        document.getElementById('xQuaternion').innerHTML = "x: " + Math.round(rotation.x * 180 / Math.PI + 180);
+        document.getElementById('yQuaternion').innerHTML = "y: " + Math.round(rotation.y * 180 / Math.PI + 180);
+        document.getElementById('zQuaternion').innerHTML = "z: " + Math.round(rotation.z * 180 / Math.PI + 180);
     }
 
     function parseData(sensor, data) {
