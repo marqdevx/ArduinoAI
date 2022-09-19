@@ -7,19 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
 
+    <title>Sensor page</title>
+</head>
 
-    <title>Arduino Nicla Sense ME - Web BLE test</title>
-
-    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro/dist/iro.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/109/three.min.js"></script>
-    <script src="GLTFLoader.js"></script>
+<body>
     <style>
         * {
             font-family: 'Roboto Mono', sans-serif;
@@ -53,7 +47,7 @@
 
         .container {
             width: 960px;
-            height: 384px;
+
             margin-top: 30px;
             margin-bottom: 7.5px;
             margin: 0 auto;
@@ -213,94 +207,161 @@
             }
         }
     </style>
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <div class="container">
+        <div class="container">
 
-        <div id="snackbar"></div>
-        <div class="status widget">
-            <button id="pairButton">CONNECT</button>
-            <div class="label statusBar" id="bluetooth">Click the connect button to connect your device</div>
-            <img src="Logo-Arduino-Pro-inline.svg"
-                style="position: inherit;padding-right: 0px;filter: invert(100%);float: right; grid-column: 3; width: 80%; margin-top: 8.5%;" />
-        </div>
-
-        <div class="square widget" id="3d">
-            <div class="label">&#128230; Quaternion Rotation</div>
-            <div class="quaternion" id="canvasDigits">
-                <span id="xQuaternion">x: -</span>
-                <span id="yQuaternion">y: -</span>
-                <span id="zQuaternion">z: -</span>
+            <div id="snackbar"></div>
+            <div class="status widget">
+                <button id="pairButton">CONNECT</button>
+                <div class="label statusBar" id="bluetooth">Click the connect button to connect your device</div>
+                <img src="Logo-Arduino-Pro-inline.svg"
+                    style="position: inherit;padding-right: 0px;filter: invert(100%);float: right; grid-column: 3; width: 80%; margin-top: 8.5%;" />
             </div>
+            <!--
+            <div class="square widget" id="3d">
+                <div class="label">&#128230; Quaternion Rotation</div>
+                <div class="quaternion" id="canvasDigits">
+                    <span id="xQuaternion">x: -</span>
+                    <span id="yQuaternion">y: -</span>
+                    <span id="zQuaternion">z: -</span>
+                </div>
+            </div>
+
+            <div class="double widget">
+                <div class="label">&#128640; Accelerometer</div>
+                <div id="accelerometer" class="doublegraph"></div>
+            </div>
+
+            <div class="square widget">
+                <div class="label">&#128171; Gyroscope</div>
+                <div class="label" id="gyroscope-value"></div>
+                <div id="gyroscope" class="graph"></div>
+            </div>
+
+            <div class="square widget">
+                <div class="label">&#128161; RGB LED control</div>
+                <div id="color-picker-container" class="graph"></div>
+            </div>
+
+            <div class="short widget">
+                <div class="label">&#127777; Temperature - </div>
+                <div class="label" id="temperature-value"></div>
+                <div class="label">&deg;C</div>
+                <div class="shortgraph" id="temperature"></div>
+            </div>
+
+            <div class="short widget">
+                <div class="label">&#128167; Humidity - </div>
+                <div class="label" id="humidity-value"></div>
+                <div class="label">%</div>
+                <div class="shortgraph" id="humidity"></div>
+
+            </div>
+
+            <div class="short widget">
+                <div class="label">&#9925; Pressure - </div>
+                <div class="label" id="pressure-value"></div>
+                <div class="label">kPa</div>
+                <div class="shortgraph" id="pressure"></div>
+            </div>
+
+            <div class="short widget">
+                <div class="label">&#127968; Indoor Air Quality - </div>
+                <div class="label" id="bsec-value"></div>
+                <div class="label"></div>
+                <div class="shortgraph" id="bsec"></div>
+            </div>
+
+            <div class="short widget">
+                <div class="label">&#127793; Co2 Value -</div>
+                <div class="label" id="co2-value"></div>
+                <div class="label"></div>
+                <div class="shortgraph" id="co2"></div>
+            </div>
+
+            <div class="short widget">
+                <div class="label">&#x1F4A8; Gas Value -</div>
+                <div class="label" id="gas-value"></div>
+                <div class="label"></div>
+                <div class="shortgraph" id="gas"></div>
+            </div>
+
         </div>
 
-        <div class="double widget">
-            <div class="label">&#128640; Accelerometer</div>
-            <div id="accelerometer" class="doublegraph"></div>
-        </div>
+        <!-- Connection form -->
 
-        <div class="square widget">
-            <div class="label">&#128171; Gyroscope</div>
-            <div class="label" id="gyroscope-value"></div>
-            <div id="gyroscope" class="graph"></div>
-        </div>
+            <!-- <hr><br> -->
+            <!-- Configuration form -->
 
-        <div class="square widget">
-            <div class="label">&#128161; RGB LED control</div>
-            <div id="color-picker-container" class="graph"></div>
-        </div>
+            <div class="container text-center">
 
-        <div class="short widget">
-            <div class="label">&#127777; Temperature - </div>
-            <div class="label" id="temperature-value"></div>
-            <div class="label">&deg;C</div>
-            <div class="shortgraph" id="temperature"></div>
-        </div>
+                <h3>Sensor Configuration</h3>
 
-        <div class="short widget">
-            <div class="label">&#128167; Humidity - </div>
-            <div class="label" id="humidity-value"></div>
-            <div class="label">%</div>
-            <div class="shortgraph" id="humidity"></div>
+                <div class="row input-group">
 
-        </div>
+                    <div class="col-md-3 input-group">
+                        <span class="input-group-text" id="basic-addon1">Sensor </span>
+                        <input id="sensorId" name="sensorId" type="text" class="form-control"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <span class="input-group-text" id="basic-addon1">Sample Rate </span>
+                        <input id="rate" name="rate" type="text" class="form-control input-md">
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <span class="input-group-text" id="basic-addon1">Latency </span>
+                        <input id="latency" name="latency" type="text" class="form-control input-md">
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <button type="button" id="configureButton" name="configureButton"
+                            class="btn btn-primary">Configure</button>
+                    </div>
 
-        <div class="short widget">
-            <div class="label">&#9925; Pressure - </div>
-            <div class="label" id="pressure-value"></div>
-            <div class="label">kPa</div>
-            <div class="shortgraph" id="pressure"></div>
-        </div>
+                </div>
 
-        <div class="short widget">
-            <div class="label">&#127968; Indoor Air Quality - </div>
-            <div class="label" id="bsec-value"></div>
-            <div class="label"></div>
-            <div class="shortgraph" id="bsec"></div>
-        </div>
+            </div>
 
-        <div class="short widget">
-            <div class="label">&#127793; Co2 Value -</div>
-            <div class="label" id="co2-value"></div>
-            <div class="label"></div>
-            <div class="shortgraph" id="co2"></div>
-        </div>
+            <!-- Read sensor data form -->
+            <div class="container text-center">
+                <h3>Read sensor data</h3>
+                <table id="dataTable" class="table table-bordered" style="table-layout:auto; width:100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 10%;">Sensor ID</th>
+                            <th scope="col" style="width: 14%;">Sensor Name</th>
+                            <th scope="col" style="width: 25%;">Data</th>
+                            <th scope="col" style="width: 7%;">Status</th>
+                            <th scope="col" style="width: 44%;">Chart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
 
-        <div class="short widget">
-            <div class="label">&#x1F4A8; Gas Value -</div>
-            <div class="label" id="gas-value"></div>
-            <div class="label"></div>
-            <div class="shortgraph" id="gas"></div>
-        </div>
-
-    </div>
-</body>
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+                crossorigin="anonymous"></script>
+    </body>
 
 </html>
 
 <script>
+
+    document.getElementById('sensorId').value = '10';
+    document.getElementById('rate').value = '0';
+    document.getElementById('latency').value = '0';
 
     const deviceName = 'NICLA'
     const sensorServiceUuid = '34c2e3bb-34aa-11eb-adc1-0242ac120002';
@@ -319,6 +380,11 @@
     var parseScheme;
     var sensorTypes;
     var sensorTypesLen;
+
+    const pairButton = document.getElementById('pairButton');
+    const BLEstatus = document.getElementById('bluetooth');
+
+    snack('IMPORTANT - first upload the Arduino_BHY2/app.ino sketch', 1)
 
     fetch("./parse-scheme.json")
         .then(response => response.json())
@@ -341,91 +407,63 @@
 
     document.querySelector('#pairButton').addEventListener('click', function () {
         if (isWebBluetoothEnabled()) {
+
             connect()
                 .then(_ => {
                     console.log('Connected')
-                    // document.querySelector('#configureButton').disabled = false
+                    document.querySelector('#configureButton').disabled = false
                 })
+                .catch(error => {
+                    console.log('ERROR: ' + error);
+                });
         }
-
     });
-    /*
-        document.querySelector('#configureButton').addEventListener('click',
-            _ => {
-                var sensorId = parseInt(document.getElementById('sensorId').value);
-                var sampleRate = parseFloat(document.getElementById('rate').value);
-                var latency = parseInt(document.getElementById('latency').value);
-    
-                if (sensorTypes[sensorId].name) {
-    
-                    var configPacket = new Uint8Array(9);
-                    configPacket[0] = sensorId;
-                    configPacket.set(floatToBytes(sampleRate), 1);
-                    configPacket.set(intToBytes(latency), 5);
-                    console.log(configPacket);
-    
-                    sensorConfigCharacteristic.writeValue(configPacket)
-                        .then(_ => {
-                            console.log('Configuration written');
-                        });
-    
-                    //Handle individual Enabled buttons
-                    var table = document.getElementById("dataTable");
-                    if (sensorMap.has(sensorId)) {
-                        rowIndex = sensorMap.get(sensorId);
-                        var row = table.rows[rowIndex];
-                        row.cells[3].firstChild.style.backgroundColor = "limegreen";
-                    } else {
-                        var tableLength = table.rows.length;
-                        sensorMap.set(sensorId, tableLength);
-                        var row = table.insertRow(tableLength);
-                        var cell = row.insertCell(0);
-                        cell.innerHTML = sensorId;
-                        cell = row.insertCell(1);
-                        cell.innerHTML = sensorTypes[sensorId].name;
-                        cell = row.insertCell(2);
-                        cell.innerHTML = 0;
-                        cell = row.insertCell(3);
-                        cell.innerHTML = '<input id="Button" type="button" value="Enabled" onclick="updateSensorStatus(this, \'' + sensorId + '\');"/>'
-                        row.cells[3].firstChild.style.backgroundColor = "limegreen";
-                        cell = row.insertCell(4);
-                        var chartIdx = sensorTypes[sensorId].name;
-                        cell.innerHTML = '<div id=\'' + chartIdx + '\'></div>';
-                    }
+
+    document.querySelector('#configureButton').addEventListener('click',
+        _ => {
+            var sensorId = parseInt(document.getElementById('sensorId').value);
+            var sampleRate = parseFloat(document.getElementById('rate').value);
+            var latency = parseInt(document.getElementById('latency').value);
+            if (sensorTypes[sensorId].name) {
+                var configPacket = new Uint8Array(9);
+                configPacket[0] = sensorId;
+                configPacket.set(floatToBytes(sampleRate), 1);
+                configPacket.set(intToBytes(latency), 5);
+                console.log(configPacket);
+
+                sensorConfigCharacteristic.writeValue(configPacket)
+                    .then(_ => {
+                        console.log('Configuration written');
+                    });
+
+                //Handle individual Enabled buttons
+                var table = document.getElementById("dataTable");
+                if (sensorMap.has(sensorId)) {
+                    rowIndex = sensorMap.get(sensorId);
+                    var row = table.rows[rowIndex];
+                    row.cells[3].firstChild.style.backgroundColor = "limegreen";
+                } else {
+                    var tableLength = table.rows.length;
+                    sensorMap.set(sensorId, tableLength);
+                    var row = table.insertRow(tableLength);
+                    var cell = row.insertCell(0);
+                    cell.innerHTML = sensorId;
+                    cell = row.insertCell(1);
+                    cell.innerHTML = sensorTypes[sensorId].name;
+                    cell = row.insertCell(2);
+                    cell.innerHTML = 0;
+                    cell = row.insertCell(3);
+                    cell.innerHTML = '<input id="Button" type="button" value="Enabled" onclick="updateSensorStatus(this, \'' + sensorId + '\');"/>'
+                    row.cells[3].firstChild.style.backgroundColor = "limegreen";
+                    cell = row.insertCell(4);
+                    var chartIdx = sensorTypes[sensorId].name;
+                    cell.innerHTML = '<div id=\'' + chartIdx + '\'></div>';
                 }
-    
-    
+
             }
-        );*/
-    // UI elements
-    const pairButton = document.getElementById('pairButton');
-    const BLEstatus = document.getElementById('bluetooth');
+        }
+    );
 
-
-
-    snack('IMPORTANT - first upload the sketch to your Arduino Nicla Sense ME &nbsp;&nbsp; <a href="https://create.arduino.cc/editor/FT-CONTENT/333e2e07-ecc4-414c-bf08-005b611ddd75/preview">OPEN</a>', 1)
-
-    // Top middle information label
-    function msg(m) {
-        BLEstatus.innerHTML = m;
-    }
-
-    //Top left pop up messaage
-    function snack(m, warningLevel) {
-        snackBar = document.getElementById("snackbar");
-        snackBar.style.visibility = "visible";
-        snackBar.className = "show";
-
-        var warnEmoji = warningLevel ? '☝️  ' : '✅  ';
-
-        setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 501);
-        snackBar.innerHTML = warnEmoji + m + ' <span onClick=hideSnack() style="cursor:pointer; margin-left: 15px"> ✖ </span> ';
-    }
-
-    function hideSnack() {
-        snackBar = document.getElementById("snackbar");
-        snackBar.style.visibility = "hidden";
-    }
     function floatToBytes(value) {
         var tempArray = new Float32Array(1);
         tempArray[0] = value;
@@ -449,8 +487,7 @@
 
     function getDeviceInfo() {
         let options = {
-            filters: [{ name: deviceName }],
-            optionalServices: [sensorServiceUuid]
+            filters: [{ services: [sensorServiceUuid] }]
         };
         console.log('Requesting BLE device info...');
         return navigator.bluetooth.requestDevice(options).then(device => {
@@ -459,19 +496,42 @@
             console.log('Request device error: ' + error)
         });
     }
+    // Top middle information label
+    function msg(m) {
+        BLEstatus.innerHTML = m;
+    }
 
+    //Top left pop up messaage
+    function snack(m, warningLevel) {
+        snackBar = document.getElementById("snackbar");
+        snackBar.style.visibility = "visible";
+        snackBar.className = "show";
+
+        var warnEmoji = warningLevel ? '☝️  ' : '✅  ';
+
+        setTimeout(function () { snackBar.className = snackBar.className.replace("show", ""); }, 501);
+        snackBar.innerHTML = warnEmoji + m + ' <span onClick=hideSnack() style="cursor:pointer; margin-left: 15px"> ✖ </span> ';
+    }
+
+    function hideSnack() {
+        snackBar = document.getElementById("snackbar");
+        snackBar.style.visibility = "hidden";
+    }
     function connect() {
         return getDeviceInfo()
+            .then(msg('connecting to device ...'))
             .then(connectDevice)
             .then(getSensorCharacteristics)
             .then(onConnection);
-
-
-
     }
 
     function connectDevice() {
+        pairButton.style.backgroundColor = "grey";
+        pairButton.style.color = 'black';
+        pairButton.innerHTML = "PAIRING";
+
         console.log('Connecting to device')
+
         bleDevice.addEventListener('gattserverdisconnected', onDisconnection);
         return bleDevice.gatt.connect()
             .then(server => {
@@ -480,7 +540,9 @@
             })
             .then(service => {
                 sensorService = service;
-            });
+            })
+            .then(msg('getting BLE characteristics ...'));
+
     }
 
     function onDisconnection(event) {
@@ -490,12 +552,13 @@
     }
 
     function onConnection() {
+        msg('Connected');
         pairButton.style.backgroundColor = 'green';
         pairButton.style.color = 'white';
         pairButton.innerHTML = "PAIRED";
-        msg('Characteristics configured');
-        snack('Connected.', 0);
-        updateSensorStatus(128)
+        var status = document.getElementById("connectionStatus");
+        status.innerHTML = "Connected";
+        status.className = "badge rounded-pill bg-success";
     }
 
     function getSensorCharacteristics() {
@@ -522,22 +585,32 @@
             });
     }
 
-    function updateSensorStatus(sensor) {
+    function updateSensorStatus(_this, sensor) {
         var configPacket = new Uint8Array(9);
         configPacket[0] = sensor;
 
-
-        //Turn sensor OFF
-        console.log("Enable sensor ", sensor);
-        configPacket.set(floatToBytes(1), 1);
-        console.log(configPacket);
-        sensorConfigCharacteristic.writeValue(configPacket)
-        sensorConfigCharacteristic.writeValue(configPacket)
-            .then(_ => {
-                console.log('Configuration written');
-            });
-
-
+        if (_this.style.backgroundColor == "limegreen") {
+            //Turn sensor OFF
+            console.log("Disable sensor ", sensor);
+            configPacket.set(floatToBytes(0), 1);
+            configPacket.set(intToBytes(0), 5);
+            console.log(configPacket);
+            sensorConfigCharacteristic.writeValue(configPacket)
+                .then(_ => {
+                    console.log('Configuration written');
+                });
+            _this.style.backgroundColor = "";
+        } else {
+            //Turn sensor ON
+            console.log("Enable sensor ", sensor);
+            configPacket.set(floatToBytes(1), 1);
+            console.log(configPacket);
+            sensorConfigCharacteristic.writeValue(configPacket)
+                .then(_ => {
+                    console.log('Configuration written');
+                });
+            _this.style.backgroundColor = "limegreen";
+        }
     }
 
     function fillSensorTable() {
@@ -573,15 +646,11 @@
         // Get sensor data
         var sensor = value.getUint8(0);
         var size = value.getUint8(1);
-        console.log("received " + sensorTypes[sensor].name)
+        console.log(value)
         var parsedData = parseData(sensor, value);
         parsedName = parsedData[0]
         parsedStringValue = parsedData[1]
         parsedValue = parsedData[2]
-
-        const div = document.getElementById(sensorTypes[sensor].name + "-value");
-        div.innerHTML = parsedValue;
-        console.log(parsedValue)
 
         var table = document.getElementById("dataTable");
         // If sensor is already in the table -> update its value
@@ -593,35 +662,50 @@
             cell = row.cells[1];
             cell.innerHTML = parsedName;
             cell = row.cells[2];
-            cell.innerHTML = parsedStringValue;
+            cell.innerHTML = parsedValue;
             cell = row.cells[4];
             var chartIdx = parsedName;
 
             var cnt = 0;
-
 
             if (sensorTypes[sensor].scheme == "singleRead") {
 
                 //Initial condition to draw the first chart point
                 if (sensorTypes[sensor].value == 0) {   //Plot doesn't exist yet because no valid data have been received
                     if (parsedValue != 0) {   //First valid data received: draw it in the chart
-                        // Plotly.newPlot(chartIdx,[{y:[parsedValue],type:'line'}]);
+                        console.log("parsing " + parsedName)
+                        Plotly.newPlot(parsedName, [{ y: [parsedValue] }], {
+
+                            plot_bgcolor: '#111111',
+                            paper_bgcolor: '#111111',
+                            margin: { l: 8, r: 8, b: 18, t: 18 },
+                            showlegend: false,
+                            yaxis: { 'showticklabels': false },
+                            xaxis: {
+                                'range': [0, 64],
+                                'showticklabels': false,
+                                'autorange': false,
+                                'showgrid': true,
+                                'zeroline': true,
+                                tickfont: { size: 8 }
+                            }
+                        });
                         //Update json to signal that the reception started
                         cnt = sensorTypes[sensor].value + 1;
                         sensorTypes[sensor].value = cnt;
                     }
                 } else {    //Plot already exists
-                    // Plotly.extendTraces(chartIdx,{y:[[parsedValue]]}, [0]);
+                    Plotly.extendTraces(chartIdx, { y: [[parsedValue]] }, [0]);
                     cnt = sensorTypes[sensor].value;
                     sensorTypes[sensor].value = cnt + 1;
                 }
 
                 if (cnt > 200) {
-                    /* Plotly.relayout(chartIdx,{
-                       xaxis: {
-                         range: [cnt-200,cnt]
-                       }
-                     });*/
+                    Plotly.relayout(chartIdx, {
+                        xaxis: {
+                            range: [cnt - 200, cnt]
+                        }
+                    });
                 }
 
             } else if (sensorTypes[sensor].scheme == "xyz") {
@@ -635,12 +719,12 @@
                 //Initial condition to draw the first chart point
                 if (sensorTypes[sensor].value == 0) {   //Plot doesn't exist yet because no valid data have been received
                     if (parsedValue != 0) {   //First valid data received: draw it in the chart
-                        //Plotly.newPlot(chartIdx,[{x:[arrXYZValues[1]],y:[arrXYZValues[5]],z:[arrXYZValues[9]],type:'mesh3d'}]);
+                        Plotly.newPlot(chartIdx, [{ x: [arrXYZValues[1]], y: [arrXYZValues[5]], z: [arrXYZValues[9]], type: 'mesh3d' }]);
                         //Update json to signal that the reception started
                         sensorTypes[sensor].value = parsedValue;
                     }
                 } else {    //Plot already exists
-                    //Plotly.extendTraces(chartIdx,{x:[[arrXYZValues[1]]],y:[[arrXYZValues[5]]],z:[[arrXYZValues[9]]]}, [0]);
+                    Plotly.extendTraces(chartIdx, { x: [[arrXYZValues[1]]], y: [[arrXYZValues[5]]], z: [[arrXYZValues[9]]] }, [0]);
                 }
 
             } else if (sensorTypes[sensor].scheme == "BSECOutput") {
@@ -655,24 +739,24 @@
 
                 if (sensorTypes[sensor].value == 0) {   //Plot doesn't exist yet because no valid data have been received
                     if (val1 != 0 && val2 != 0) {   //First valid data received: draw it in the chart
-                        // Plotly.newPlot(chartIdx,[{y:[val1],name: 'Temp',type:'line'},{y:[val2],name: 'Humidity',type:'line'}]);
+                        Plotly.newPlot(chartIdx, [{ y: [val1], name: 'Temp', type: 'line' }, { y: [val2], name: 'Humidity', type: 'line' }]);
                         //Update json to signal that the reception started
                         cnt = sensorTypes[sensor].value + 1;
                         sensorTypes[sensor].value = cnt;
                     }
                 } else {    //Plot already exists
-                    // Plotly.extendTraces(chartIdx,{y:[[val1]]}, [0]);
-                    //Plotly.extendTraces(chartIdx,{y:[[val2]]}, [1]);
+                    Plotly.extendTraces(chartIdx, { y: [[val1]] }, [0]);
+                    Plotly.extendTraces(chartIdx, { y: [[val2]] }, [1]);
                     cnt = sensorTypes[sensor].value;
                     sensorTypes[sensor].value = cnt + 1;
                 }
 
                 if (cnt > 150) {
-                    /*Plotly.relayout(chartIdx,{
-                      xaxis: {
-                        range: [cnt-150,cnt]
-                      }
-                    });*/
+                    Plotly.relayout(chartIdx, {
+                        xaxis: {
+                            range: [cnt - 150, cnt]
+                        }
+                    });
                 }
             } else if (sensorTypes[sensor].scheme == "BSECOutputV2") {
                 //Parse BSEC values
@@ -687,30 +771,30 @@
 
                 if (sensorTypes[sensor].value == 0) {   //Plot doesn't exist yet because no valid data have been received
                     if (val4 != 0) {   //First valid data received: draw it in the chart, valid CO2-eq output is always greater than 0
-                        /* Plotly.newPlot(chartIdx,
-                             [
-                                 {y:[val1],name:'IAQ',type:'line'}, {y:[val2],name:'IAQ-S',type:'line'},
-                                 {y:[val3],name:'bVOC-eq (ppb)',type:'line'}, {y:[val4],name:'CO2-eq (ppm)',type:'line'}
-                             ]);*/
+                        Plotly.newPlot(chartIdx,
+                            [
+                                { y: [val1], name: 'IAQ', type: 'line' }, { y: [val2], name: 'IAQ-S', type: 'line' },
+                                { y: [val3], name: 'bVOC-eq (ppb)', type: 'line' }, { y: [val4], name: 'CO2-eq (ppm)', type: 'line' }
+                            ]);
                         //Update json to signal that the reception started
                         cnt = sensorTypes[sensor].value + 1;
                         sensorTypes[sensor].value = cnt;
                     }
                 } else {    //Plot already exists
-                    /* Plotly.extendTraces(chartIdx,{y:[[val1]]}, [0]);
-                     Plotly.extendTraces(chartIdx,{y:[[val2]]}, [1]);
-                     Plotly.extendTraces(chartIdx,{y:[[val3]]}, [2]);
-                     Plotly.extendTraces(chartIdx,{y:[[val4]]}, [3]);*/
+                    Plotly.extendTraces(chartIdx, { y: [[val1]] }, [0]);
+                    Plotly.extendTraces(chartIdx, { y: [[val2]] }, [1]);
+                    Plotly.extendTraces(chartIdx, { y: [[val3]] }, [2]);
+                    Plotly.extendTraces(chartIdx, { y: [[val4]] }, [3]);
                     cnt = sensorTypes[sensor].value;
                     sensorTypes[sensor].value = cnt + 1;
                 }
 
                 if (cnt > 150) {
-                    /* Plotly.relayout(chartIdx,{
-                       xaxis: {
-                         range: [cnt-150,cnt]
-                       }
-                     });*/
+                    Plotly.relayout(chartIdx, {
+                        xaxis: {
+                            range: [cnt - 150, cnt]
+                        }
+                    });
                 }
 
             }
@@ -827,245 +911,5 @@
             }
         }
     }
-
-</script>
-
-
-<script>
-
-    function initColorPicker() {
-        //Default color blue
-        var rgb_values = Uint8Array.of(0, 0, 255);
-        NiclaSenseME['led'].writeValue = rgb_values;
-        BLEwriteTo('led');
-        ledMaterial.color.setRGB(0, 0, 255);
-        ledLight.color.setRGB(0, 0, 255);
-
-        NiclaSenseME.led.colorPicker = new iro.ColorPicker("#color-picker-container", {
-            width: 150,
-            color: "rgb(0, 0, 255)",
-            borderWidth: 1,
-            borderColor: "#fff",
-            sliderHeight: 6,
-            sliderMargin: 6
-        });
-        // RGB Color Picker
-        NiclaSenseME.led.colorPicker.on('color:change', updateModelLed);
-        function updateModelLed(color) {
-            ledLight.color.setHex("0x" + color.hexString.substring(1, 7));
-            ledMaterial.color.set(color.hexString)   // where r, g, and b are 0 to 1
-            var rgb_values = Uint8Array.of(color.rgb.r, color.rgb.g, color.rgb.b);
-            NiclaSenseME['led'].writeValue = rgb_values;
-            BLEwriteTo('led');
-        }
-
-
-    }
-
-    // Graphing
-    const colors = ["#FF355E", "#FD5B20", "#FF6037", "#FF9966", "#FF9933", "#FFCC33", "#FFFF66", "#FFFF66", "#CCFF00", "#66FF66", "#AAF0D1", "#50BFE6", "#FF6EFF", "#EE34D2", "#FF00CC", "#FF00CC"];
-    var colorIndex = 0;
-    function initGraph(sensor) {
-        var title = sensor;
-        var series = Object.keys(NiclaSenseME[sensor].data);
-        var format = [];
-        series.forEach(function (item) {
-            colorIndex++;
-            if (colorIndex > colors.length) { colorIndex = 0; }
-            format.push({
-                y: [],
-                name: item,
-                mode: 'lines',
-                width: 1,
-                line: { width: 1, color: colors[colorIndex] }
-            });
-        });
-
-        Plotly.plot(title, format, {
-            plot_bgcolor: '#111111',
-            paper_bgcolor: '#111111',
-            margin: { l: 8, r: 8, b: 18, t: 18 },
-            showlegend: false,
-            yaxis: { 'showticklabels': false },
-            xaxis: {
-                'range': [0, maxRecords],
-                'showticklabels': false,
-                'autorange': false,
-                'showgrid': true,
-                'zeroline': true,
-                tickfont: { size: 8 }
-            }
-        }
-        );
-    }
-
-    // 3d model
-    var renderer = new THREE.WebGLRenderer();
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
-
-    function init3D() {
-        var container = document.getElementById('3d');
-        var loader = new THREE.GLTFLoader();
-        var canvasDigits = document.getElementById('canvasDigits');
-        scene.background = new THREE.Color(0x58585A);
-        renderer.setSize(177, 177);
-
-        renderer.setPixelRatio(4);
-
-        container.insertBefore(renderer.domElement, canvasDigits);
-        renderer.domElement.style.margin = "9px";
-        loader.load('models/niclaSenseME.glb',
-            // called when the Arduinio model is loaded
-            function (gltf) {
-                // Model
-                arduinoModel = gltf.scene;
-                scene.add(arduinoModel);
-
-                // LED
-                var geometry = new THREE.BoxGeometry(1, 1, 1);
-                ledMaterial = new THREE.MeshBasicMaterial({ color: 0x111111 });
-                ledObject = new THREE.Mesh(geometry, ledMaterial);
-                ledObject.position.set(9, -10, -1);
-
-                ledLight = new THREE.PointLight(0x111111, 3, 40);
-                ledLight.color.setRGB(0, 255, 0);
-                ledLight.position.set(9, -10, -1.2);
-
-                ledMaterial.color.setRGB(0, 255, 0);
-
-                arduinoModel.add(ledObject);
-                arduinoModel.add(ledLight);
-
-                arduinoModel.rotation.x = 90 * (Math.PI / 180);  // Show the bottom side of the board by default
-
-                var sphereSize = 1;
-
-                // Light
-                const color = 0xFFFFFF;
-                const intensity = 1;
-                const light = new THREE.DirectionalLight(color, intensity);
-                light.position.set(-20, 100, -10);
-                light.target.position.set(0, 0, 0);
-                scene.add(light);
-                scene.add(light.target);
-                var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
-                scene.add(hemiLight);
-
-                // Camera
-                camera.position.set(0, 25, 0);
-                camera.rotation.y = Math.PI; // 180
-                camera.lookAt(new THREE.Vector3(0, 0, 0));
-                renderer.render(scene, camera);
-            }
-        );
-    }
-
-    function colorBars(sensor) {
-        // Color + light
-        const canvas = document.getElementById('colors');
-        const ctx = canvas.getContext('2d');
-        const thickness = canvas.width / maxRecords;
-        ctx.fillStyle = "#111111";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        for (i = 0; i < maxRecords; i++) {
-            R = NiclaSenseME[sensor].data.R[i];
-            G = NiclaSenseME[sensor].data.G[i];
-            B = NiclaSenseME[sensor].data.B[i];
-            total = R + G + B;
-            R = R / total * 255; G = G / total * 255; B = B / total * 255;
-            ctx.fillStyle = "rgba(" + R + "," + G + "," + B + ")";
-            ctx.fillRect(i * thickness, 128, thickness - 1, -total / 5);
-        }
-    }
-    // return last item of array
-    Array.prototype.latest = function () { return this[this.length - 1]; };
-
-    function graph(sensor) {
-        var labels = Object.keys(NiclaSenseME[sensor].data);
-        var values = [];
-        // after
-        labels.forEach(function (label) {
-            values.push(NiclaSenseME[sensor].data[label]);
-        });
-        Plotly.restyle(sensor, { y: values });
-    }
-
-    function digit(sensor) {
-        const value = NiclaSenseME[sensor].data[sensor].latest();
-        const div = document.getElementById(sensor + "-value");
-        if (!Number.isNaN(value)) { div.innerHTML = Math.round(value * 10) / 10; };
-    }
-
-    function update3d(sensor) {
-
-        // Get the quaternion values
-        var x = NiclaSenseME['quaternion'].data.x.latest();
-        var y = NiclaSenseME['quaternion'].data.y.latest();
-        var z = NiclaSenseME['quaternion'].data.z.latest();
-        var w = NiclaSenseME['quaternion'].data.w.latest();
-
-        // Construct the quaternion object with the values and apply that to the 3D model
-        const quaternion = new THREE.Quaternion(x, y, z, w);
-        //quaternion.set(x,y,z,w);
-
-        arduinoModel.setRotationFromQuaternion(quaternion);
-
-        renderer.render(scene, camera);
-
-        // Euler conversion, show the degrees below the 3D model
-        var rotation = new THREE.Euler().setFromQuaternion(quaternion, 'XYZ');
-
-        document.getElementById('xQuaternion').innerHTML = "x: " + Math.round(rotation.x * 180 / Math.PI + 180);
-        document.getElementById('yQuaternion').innerHTML = "y: " + Math.round(rotation.y * 180 / Math.PI + 180);
-        document.getElementById('zQuaternion').innerHTML = "z: " + Math.round(rotation.z * 180 / Math.PI + 180);
-    }
-
-    function bytes() {
-        if (bytesReceived > bytesPrevious) {
-            bytesPrevious = bytesReceived;
-            msg(bytesReceived + " bytes received");
-        }
-    }
-
-    var skip_frame = false;
-    function draw() {
-        function updateViz(sensor, fns) {
-            if (NiclaSenseME[sensor].rendered == false) { // only render if new values are received
-                fns.forEach(function (fn) {
-                    fn(sensor);
-                });
-                NiclaSenseME[sensor].rendered = true;
-            }
-        }
-        if (skip_frame == false) { // TODO update with fuction to iterate object with viz function as a property
-            updateViz('accelerometer', [graph]);
-            updateViz('gyroscope', [graph]);
-            updateViz('temperature', [digit, graph]);
-            updateViz('humidity', [digit, graph]);
-            updateViz('pressure', [digit, graph]);
-            updateViz('bsec', [digit, graph]);
-            updateViz('co2', [digit, graph]);
-            updateViz('gas', [digit, graph]);
-            updateViz('quaternion', [update3d]);
-
-            //bytes();  //Get the total amount of bytes received
-
-            skip_frame = true; // render alternate frames = 30fps
-        } else { skip_frame = false; }
-        requestAnimationFrame(draw);
-    }
-
-    initGraph('gyroscope');
-    initGraph('accelerometer');
-    initGraph('temperature');
-    initGraph('humidity');
-    initGraph('pressure');
-    initGraph('bsec');
-    initGraph('co2');
-    initGraph('gas');
-
-    init3D();
-    requestAnimationFrame(draw);
 
 </script>

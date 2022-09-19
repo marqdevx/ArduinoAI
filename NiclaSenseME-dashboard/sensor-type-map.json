@@ -17,7 +17,7 @@
     "name": "accelerometer",
     "scheme": "xyz",
     "value": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "5": {
@@ -59,7 +59,7 @@
     "name": "GYROSCOPE",
     "scheme": "xyz",
     "value": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "14": {
@@ -156,7 +156,7 @@
   "34": {
     "name": "ROTATION",
     "scheme": "quaternion",
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "35": {
@@ -192,7 +192,7 @@
   "43": {
     "name": "ORIENTATION",
     "scheme": "orientation",
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "44": {
@@ -212,7 +212,7 @@
     "name": "STEP_DETECTOR",
     "scheme": "event",
     "eventcount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "52": {
@@ -224,7 +224,7 @@
     ],
     "value": 0,
     "sampleCount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "53": {
@@ -289,7 +289,7 @@
     ],
     "value": 0,
     "sampleCount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "70": {
@@ -315,7 +315,7 @@
     "name": "MOTION_DET",
     "scheme": "event",
     "eventcount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "91": {
@@ -350,11 +350,11 @@
     "name": "BSEC Output",
     "scheme": "BSECOutputV2",
     "value": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "128": {
-    "name": "temperature",
+    "name": "TEMPERATURE",
     "scheme": "singleRead",
     "parse-scheme": 
     [
@@ -362,11 +362,11 @@
     ],
     "value": 0,
     "sampleCount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "129": {
-    "name": "BAROMETER",
+    "name": "PRESSURE",
     "scheme": "singleRead",
     "parse-scheme": 
     [
@@ -374,7 +374,7 @@
     ],
     "value": 0,
     "sampleCount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "130": {
@@ -386,7 +386,7 @@
     ],
     "value": 0,
     "sampleCount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "131": {
@@ -398,7 +398,7 @@
     ],
     "value": 0,
     "sampleCount": 0,
-    "dashboard": 1
+    "dashboard": 0
   },
 
   "132": {
