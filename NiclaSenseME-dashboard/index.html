@@ -297,7 +297,11 @@
 
         <!-- Read sensor data form -->
         <div class="container text-center">
-            <table id="dataTable" class="table table-bordered" style="table-layout:auto; width:100%;">
+            <input id="" type="button" value="Debug table" onclick="toggleTable(this);"
+                style="background-color: gray;" />
+
+            <table id="dataTable" class="table table-bordered"
+                style="table-layout:auto; width:100%; visibility: hidden;">
                 <thead>
                     <tr>
                         <th scope="col" style="width: 10%;">Sensor ID</th>
@@ -522,6 +526,16 @@
             });
     }
 
+    function toggleTable(_this) {
+        table = document.getElementById("dataTable")
+        if (_this.style.backgroundColor == "limegreen") {
+            table.style.visibility = "hidden";
+            _this.style.backgroundColor = "gray";
+        } else {
+            table.style.visibility = "visible";
+            _this.style.backgroundColor = "limegreen";
+        }
+    }
     function updateSensorStatus(_this, sensor) {
 
         if (_this.style.backgroundColor == "limegreen") {
@@ -656,6 +670,9 @@
             cell.innerHTML = sensor;
             cell = row.cells[1];
             cell.innerHTML = parsedName;
+
+            cell = row.cells[2];
+            cell.innerHTML = parsedStringValue;
 
             //cell = row.cells[4];
             var chartIdx = document.getElementById(parsedName);
