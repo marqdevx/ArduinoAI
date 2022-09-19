@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
 
-    <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <title>Sensor page</title>
 </head>
@@ -210,7 +210,6 @@
     </head>
 
     <body>
-
         <div class="container">
 
             <div id="snackbar"></div>
@@ -220,7 +219,7 @@
                 <img src="Logo-Arduino-Pro-inline.svg"
                     style="position: inherit;padding-right: 0px;filter: invert(100%);float: right; grid-column: 3; width: 80%; margin-top: 8.5%;" />
             </div>
-            <!--
+
             <div class="square widget" id="3d">
                 <div class="label">&#128230; Quaternion Rotation</div>
                 <div class="quaternion" id="canvasDigits">
@@ -291,77 +290,40 @@
 
         </div>
 
-        <!-- Connection form -->
+        <!-- Configuration form -->
 
-            <!-- <hr><br> -->
-            <!-- Configuration form -->
+        <!-- Read sensor data form -->
+        <div class="container text-center">
+            <table id="dataTable" class="table table-bordered" style="table-layout:auto; width:100%;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 10%;">Sensor ID</th>
+                        <th scope="col" style="width: 14%;">Sensor Name</th>
+                        <th scope="col" style="width: 25%;">Data</th>
+                        <th scope="col" style="width: 7%;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
-            <div class="container text-center">
-
-                <h3>Sensor Configuration</h3>
-
-                <div class="row input-group">
-
-                    <div class="col-md-3 input-group">
-                        <span class="input-group-text" id="basic-addon1">Sensor </span>
-                        <input id="sensorId" name="sensorId" type="text" class="form-control"
-                            aria-describedby="basic-addon1">
-                    </div>
-                    <div class="col-md-3 input-group">
-                        <span class="input-group-text" id="basic-addon1">Sample Rate </span>
-                        <input id="rate" name="rate" type="text" class="form-control input-md">
-                    </div>
-                    <div class="col-md-3 input-group">
-                        <span class="input-group-text" id="basic-addon1">Latency </span>
-                        <input id="latency" name="latency" type="text" class="form-control input-md">
-                    </div>
-                    <div class="col-md-3 input-group">
-                        <button type="button" id="configureButton" name="configureButton"
-                            class="btn btn-primary">Configure</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Read sensor data form -->
-            <div class="container text-center">
-                <h3>Read sensor data</h3>
-                <table id="dataTable" class="table table-bordered" style="table-layout:auto; width:100%;">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 10%;">Sensor ID</th>
-                            <th scope="col" style="width: 14%;">Sensor Name</th>
-                            <th scope="col" style="width: 25%;">Data</th>
-                            <th scope="col" style="width: 7%;">Status</th>
-                            <th scope="col" style="width: 44%;">Chart</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Optional JavaScript -->
-            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-                crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-                crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-                crossorigin="anonymous"></script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
     </body>
 
 </html>
 
 <script>
-
-    document.getElementById('sensorId').value = '10';
-    document.getElementById('rate').value = '0';
-    document.getElementById('latency').value = '0';
 
     const deviceName = 'NICLA'
     const sensorServiceUuid = '34c2e3bb-34aa-11eb-adc1-0242ac120002';
@@ -415,54 +377,19 @@
                 })
                 .catch(error => {
                     console.log('ERROR: ' + error);
+                })
+                .then(_ => {
+                    sensorTypesLen = Object.keys(sensorTypes).length;
+                    startSensor(115)
+                    startSensor(130)
+                    startSensor(131)
+                    startSensor(128)
+                    startSensor(129)
+                    startSensor(4)
+                    startSensor(13)
                 });
         }
     });
-
-    document.querySelector('#configureButton').addEventListener('click',
-        _ => {
-            var sensorId = parseInt(document.getElementById('sensorId').value);
-            var sampleRate = parseFloat(document.getElementById('rate').value);
-            var latency = parseInt(document.getElementById('latency').value);
-            if (sensorTypes[sensorId].name) {
-                var configPacket = new Uint8Array(9);
-                configPacket[0] = sensorId;
-                configPacket.set(floatToBytes(sampleRate), 1);
-                configPacket.set(intToBytes(latency), 5);
-                console.log(configPacket);
-
-                sensorConfigCharacteristic.writeValue(configPacket)
-                    .then(_ => {
-                        console.log('Configuration written');
-                    });
-
-                //Handle individual Enabled buttons
-                var table = document.getElementById("dataTable");
-                if (sensorMap.has(sensorId)) {
-                    rowIndex = sensorMap.get(sensorId);
-                    var row = table.rows[rowIndex];
-                    row.cells[3].firstChild.style.backgroundColor = "limegreen";
-                } else {
-                    var tableLength = table.rows.length;
-                    sensorMap.set(sensorId, tableLength);
-                    var row = table.insertRow(tableLength);
-                    var cell = row.insertCell(0);
-                    cell.innerHTML = sensorId;
-                    cell = row.insertCell(1);
-                    cell.innerHTML = sensorTypes[sensorId].name;
-                    cell = row.insertCell(2);
-                    cell.innerHTML = 0;
-                    cell = row.insertCell(3);
-                    cell.innerHTML = '<input id="Button" type="button" value="Enabled" onclick="updateSensorStatus(this, \'' + sensorId + '\');"/>'
-                    row.cells[3].firstChild.style.backgroundColor = "limegreen";
-                    cell = row.insertCell(4);
-                    var chartIdx = sensorTypes[sensorId].name;
-                    cell.innerHTML = '<div id=\'' + chartIdx + '\'></div>';
-                }
-
-            }
-        }
-    );
 
     function floatToBytes(value) {
         var tempArray = new Float32Array(1);
@@ -586,33 +513,87 @@
     }
 
     function updateSensorStatus(_this, sensor) {
-        var configPacket = new Uint8Array(9);
-        configPacket[0] = sensor;
 
         if (_this.style.backgroundColor == "limegreen") {
             //Turn sensor OFF
-            console.log("Disable sensor ", sensor);
-            configPacket.set(floatToBytes(0), 1);
-            configPacket.set(intToBytes(0), 5);
-            console.log(configPacket);
-            sensorConfigCharacteristic.writeValue(configPacket)
-                .then(_ => {
-                    console.log('Configuration written');
-                });
+            disableSensor(sensor);
             _this.style.backgroundColor = "";
         } else {
             //Turn sensor ON
-            console.log("Enable sensor ", sensor);
-            configPacket.set(floatToBytes(1), 1);
-            console.log(configPacket);
-            sensorConfigCharacteristic.writeValue(configPacket)
-                .then(_ => {
-                    console.log('Configuration written');
-                });
+            enableSensor(sensor);
             _this.style.backgroundColor = "limegreen";
         }
     }
 
+    function configureSensor(id, sampleRate, latency) {
+        var configPacket = new Uint8Array(9);
+        configPacket[0] = id;
+        configPacket.set(floatToBytes(sampleRate), 1);
+        configPacket.set(intToBytes(latency), 5);
+        //console.log(configPacket);
+
+        sensorConfigCharacteristic.writeValue(configPacket)
+            .then(_ => {
+                console.log('Configuration written');
+            });
+    }
+    function disableSensor(id) {
+        var configPacket = new Uint8Array(9);
+        configPacket[0] = id;
+        console.log("Disable sensor ", id);
+        configPacket.set(floatToBytes(0), 1);
+        configPacket.set(intToBytes(0), 5);
+        console.log(configPacket);
+        sensorConfigCharacteristic.writeValue(configPacket)
+            .then(_ => {
+                console.log('Configuration written');
+            });
+    }
+
+    function enableSensor(id) {
+        var configPacket = new Uint8Array(9);
+        configPacket[0] = id;
+        console.log("Enable sensor ", sensorTypes[id].name);
+        configPacket.set(floatToBytes(1), 1);
+        console.log(configPacket);
+        sensorConfigCharacteristic.writeValue(configPacket)
+            .then(_ => {
+                console.log('Configuration written');
+            });
+    }
+
+    function startSensor(sensorID, rate, latency) {
+        console.log("Starting sensor " + sensorTypes[sensorID].name);
+        disableSensor(sensorID);
+        configureSensor(sensorID, rate, latency);
+
+        enableSensor(sensorID);
+        tableInsert(sensorID);
+    }
+
+    function tableInsert(sensorId) {
+        //Handle individual Enabled buttons
+        var table = document.getElementById("dataTable");
+        if (sensorMap.has(sensorId)) {
+            rowIndex = sensorMap.get(sensorId);
+            var row = table.rows[rowIndex];
+            row.cells[3].firstChild.style.backgroundColor = "limegreen";
+        } else {
+            var tableLength = table.rows.length;
+            sensorMap.set(sensorId, tableLength);
+            var row = table.insertRow(tableLength);
+            var cell = row.insertCell(0);
+            cell.innerHTML = sensorId;
+            cell = row.insertCell(1);
+            cell.innerHTML = sensorTypes[sensorId].name;
+            cell = row.insertCell(2);
+            cell.innerHTML = 0;
+            cell = row.insertCell(3);
+            cell.innerHTML = '<input id="Button" type="button" value="Enabled" onclick="updateSensorStatus(this, \'' + sensorId + '\');"/>'
+            row.cells[3].firstChild.style.backgroundColor = "limegreen";
+
+        }
+    }
     function fillSensorTable() {
         var table = document.getElementById("dataTable");
         var tableLength = table.rows.length;
@@ -632,9 +613,9 @@
                 cell.innerHTML = 0;
                 cell = row.insertCell(3);
                 cell.innerHTML = '<input id="Button" type="button" value="Enabled" onclick="updateSensorStatus(this, \'' + sensorIdx + '\');"/>'
-                cell = row.insertCell(4);
-                var chartIdx = sensorTypes[sensorIdx].name;
-                cell.innerHTML = '<div id=\'' + chartIdx + '\'></div>';
+                //cell = row.insertCell(4);
+                //var chartIdx = sensorTypes[sensorIdx].name;
+                //cell.innerHTML = '<div id=\'' + chartIdx + '\'></div>';
             }
         }
     }
@@ -646,13 +627,17 @@
         // Get sensor data
         var sensor = value.getUint8(0);
         var size = value.getUint8(1);
-        console.log(value)
+        //console.log(value)
         var parsedData = parseData(sensor, value);
         parsedName = parsedData[0]
         parsedStringValue = parsedData[1]
         parsedValue = parsedData[2]
+        console.log("Received " + parsedName);
 
         var table = document.getElementById("dataTable");
+        const colors = ["#FF355E", "#FD5B20", "#FF6037", "#FF9966", "#FF9933", "#FFCC33", "#FFFF66", "#FFFF66", "#CCFF00", "#66FF66", "#AAF0D1", "#50BFE6", "#FF6EFF", "#EE34D2", "#FF00CC", "#FF00CC"];
+        var colorIndex = 0;
+
         // If sensor is already in the table -> update its value
         if (sensorMap.has(sensor)) {
             rowIndex = sensorMap.get(sensor);
@@ -661,10 +646,9 @@
             cell.innerHTML = sensor;
             cell = row.cells[1];
             cell.innerHTML = parsedName;
-            cell = row.cells[2];
-            cell.innerHTML = parsedValue;
-            cell = row.cells[4];
-            var chartIdx = parsedName;
+
+            //cell = row.cells[4];
+            var chartIdx = document.getElementById(parsedName);
 
             var cnt = 0;
 
@@ -673,23 +657,31 @@
                 //Initial condition to draw the first chart point
                 if (sensorTypes[sensor].value == 0) {   //Plot doesn't exist yet because no valid data have been received
                     if (parsedValue != 0) {   //First valid data received: draw it in the chart
-                        console.log("parsing " + parsedName)
-                        Plotly.newPlot(parsedName, [{ y: [parsedValue] }], {
 
-                            plot_bgcolor: '#111111',
-                            paper_bgcolor: '#111111',
-                            margin: { l: 8, r: 8, b: 18, t: 18 },
-                            showlegend: false,
-                            yaxis: { 'showticklabels': false },
-                            xaxis: {
-                                'range': [0, 64],
-                                'showticklabels': false,
-                                'autorange': false,
-                                'showgrid': true,
-                                'zeroline': true,
-                                tickfont: { size: 8 }
+                        Plotly.plot(chartIdx, [{
+                            y: [parsedValue],
+                            mode: 'lines',
+                            showticklabels: false,
+                            width: 1,
+                            line: { width: 1 }
+                        }],
+                            {
+
+                                plot_bgcolor: '#111111',
+                                paper_bgcolor: '#111111',
+                                margin: { l: 8, r: 8, b: 18, t: 18 },
+                                showlegend: false,
+                                yaxis: { 'showticklabels': false },
+                                xaxis: {
+                                    'range': [0, 64],
+                                    'showticklabels': false,
+                                    'autorange': false,
+                                    'showgrid': true,
+                                    'zeroline': true,
+                                    tickfont: { size: 8 }
+                                }
                             }
-                        });
+                        );
                         //Update json to signal that the reception started
                         cnt = sensorTypes[sensor].value + 1;
                         sensorTypes[sensor].value = cnt;
@@ -700,39 +692,108 @@
                     sensorTypes[sensor].value = cnt + 1;
                 }
 
-                if (cnt > 200) {
+                if (cnt > 64) {
                     Plotly.relayout(chartIdx, {
                         xaxis: {
-                            range: [cnt - 200, cnt]
+                            range: [cnt - 64, cnt]
                         }
                     });
                 }
 
+                valueDiv = document.getElementById(parsedName + '-value');
+                if (!Number.isNaN(parsedValue)) { valueDiv.innerHTML = Math.round(parsedValue * 10) / 10; };
+
+
             } else if (sensorTypes[sensor].scheme == "xyz") {
                 //Parse 3D axes values
                 const arrXYZValues = parsedStringValue.split(" ");
-                console.log("Split: ", arrXYZValues);
-                console.log("Split[1]: ", arrXYZValues[1]);
-                console.log("Split[5]: ", arrXYZValues[5]);
-                console.log("Split[9]: ", arrXYZValues[9]);
+                /* console.log("Split: ", arrXYZValues);
+                 console.log("Split[1]: ", arrXYZValues[1]);
+                 console.log("Split[5]: ", arrXYZValues[5]);
+                 console.log("Split[9]: ", arrXYZValues[9]);*/
+
+                var split = [arrXYZValues[1], arrXYZValues[5], arrXYZValues[9]];
+
+                var item = ['x', 'y', 'z'];
+                var format = [];
+                for (var i = 0; i < 3; i++) {
+                    colorIndex++;
+                    if (colorIndex > colors.length) { colorIndex = 0; }
+                    format.push({
+                        y: [i],
+                        name: item[i],
+                        mode: 'lines',
+                        width: 1,
+                        line: { width: 1, color: colors[colorIndex] }
+                    });
+                }
 
                 //Initial condition to draw the first chart point
                 if (sensorTypes[sensor].value == 0) {   //Plot doesn't exist yet because no valid data have been received
                     if (parsedValue != 0) {   //First valid data received: draw it in the chart
-                        Plotly.newPlot(chartIdx, [{ x: [arrXYZValues[1]], y: [arrXYZValues[5]], z: [arrXYZValues[9]], type: 'mesh3d' }]);
+
+                        Plotly.plot(chartIdx, [{
+                            y: [split[0]],
+                            mode: 'lines',
+                            showticklabels: false,
+                            width: 1,
+                            line: { width: 1 }
+                        }, {
+                            y: [split[1]],
+                            mode: 'lines',
+
+                            width: 1,
+                            line: { width: 1 }
+                        }, {
+                            y: [split[2]],
+                            mode: 'lines',
+
+                            width: 1,
+                            line: { width: 1 }
+                        }],
+                            {
+
+                                plot_bgcolor: '#111111',
+                                paper_bgcolor: '#111111',
+                                margin: { l: 8, r: 8, b: 18, t: 18 },
+                                showlegend: false,
+                                yaxis: { 'showticklabels': false },
+                                xaxis: {
+                                    'range': [0, 64],
+                                    'showticklabels': false,
+                                    'autorange': false,
+                                    'showgrid': true,
+                                    'zeroline': true,
+                                    tickfont: { size: 8 }
+                                }
+                            }
+                        );
+
                         //Update json to signal that the reception started
-                        sensorTypes[sensor].value = parsedValue;
+                        cnt = sensorTypes[sensor].value + 1;
+                        sensorTypes[sensor].value = cnt;
                     }
                 } else {    //Plot already exists
-                    Plotly.extendTraces(chartIdx, { x: [[arrXYZValues[1]]], y: [[arrXYZValues[5]]], z: [[arrXYZValues[9]]] }, [0]);
+                    Plotly.extendTraces(chartIdx, {
+                        y: [[split[0]], [split[1]], [split[2]]]
+                    }, [0, 1, 2])
+                    cnt = sensorTypes[sensor].value;
+                    sensorTypes[sensor].value = cnt + 1
                 }
 
+                if (cnt > 64) {
+                    Plotly.relayout(chartIdx, {
+                        xaxis: {
+                            range: [cnt - 64, cnt]
+                        }
+                    });
+                }
             } else if (sensorTypes[sensor].scheme == "BSECOutput") {
                 //Parse BSEC values
                 const BSECValues = parsedStringValue.split(" ");
-                console.log("Split: ", BSECValues);
+                /*console.log("Split: ", BSECValues);
                 console.log("Split[1]: ", BSECValues[2]);
-                console.log("Split[7]: ", BSECValues[7]);
+                console.log("Split[7]: ", BSECValues[7]);*/
 
                 var val1 = BSECValues[2];
                 var val2 = BSECValues[7];
@@ -751,17 +812,17 @@
                     sensorTypes[sensor].value = cnt + 1;
                 }
 
-                if (cnt > 150) {
+                if (cnt > 64) {
                     Plotly.relayout(chartIdx, {
                         xaxis: {
-                            range: [cnt - 150, cnt]
+                            range: [cnt - 64, cnt]
                         }
                     });
                 }
             } else if (sensorTypes[sensor].scheme == "BSECOutputV2") {
                 //Parse BSEC values
                 const BSECValues = parsedStringValue.split(" ");
-                console.log("Split: ", BSECValues);
+                //console.log("Split: ", BSECValues);
 
                 var val1 = BSECValues[1];   //iaq
                 var val2 = BSECValues[5];   //iaq-s
@@ -769,30 +830,87 @@
                 var val4 = BSECValues[13];  //co2-eq
                 var val5 = BSECValues[17];  //status
 
+                var iaqDiv = document.getElementById("bsec");
+                var iaqDivValue = document.getElementById("bsec-value");
+                var co2Div = document.getElementById("co2");
+                var co2DivValue = document.getElementById("co2-value");
+
                 if (sensorTypes[sensor].value == 0) {   //Plot doesn't exist yet because no valid data have been received
                     if (val4 != 0) {   //First valid data received: draw it in the chart, valid CO2-eq output is always greater than 0
-                        Plotly.newPlot(chartIdx,
-                            [
-                                { y: [val1], name: 'IAQ', type: 'line' }, { y: [val2], name: 'IAQ-S', type: 'line' },
-                                { y: [val3], name: 'bVOC-eq (ppb)', type: 'line' }, { y: [val4], name: 'CO2-eq (ppm)', type: 'line' }
-                            ]);
+
+                        Plotly.plot(iaqDiv, [{
+                            y: [val2],
+                            mode: 'lines',
+                            showticklabels: false,
+                            width: 1,
+                            line: { width: 1 }
+                        }],
+                            {
+
+                                plot_bgcolor: '#111111',
+                                paper_bgcolor: '#111111',
+                                margin: { l: 8, r: 8, b: 18, t: 18 },
+                                showlegend: false,
+                                yaxis: { 'showticklabels': false },
+                                xaxis: {
+                                    'range': [0, 64],
+                                    'showticklabels': false,
+                                    'autorange': false,
+                                    'showgrid': true,
+                                    'zeroline': true,
+                                    tickfont: { size: 8 }
+                                }
+                            }
+                        );
+
+                        Plotly.plot(co2, [{
+                            y: [val4],
+                            mode: 'lines',
+                            showticklabels: false,
+                            width: 1,
+                            line: { width: 1 }
+                        }],
+                            {
+
+                                plot_bgcolor: '#111111',
+                                paper_bgcolor: '#111111',
+                                margin: { l: 8, r: 8, b: 18, t: 18 },
+                                showlegend: false,
+                                yaxis: { 'showticklabels': false },
+                                xaxis: {
+                                    'range': [0, 64],
+                                    'showticklabels': false,
+                                    'autorange': false,
+                                    'showgrid': true,
+                                    'zeroline': true,
+                                    tickfont: { size: 8 }
+                                }
+                            }
+                        );
                         //Update json to signal that the reception started
                         cnt = sensorTypes[sensor].value + 1;
                         sensorTypes[sensor].value = cnt;
                     }
-                } else {    //Plot already exists
-                    Plotly.extendTraces(chartIdx, { y: [[val1]] }, [0]);
-                    Plotly.extendTraces(chartIdx, { y: [[val2]] }, [1]);
-                    Plotly.extendTraces(chartIdx, { y: [[val3]] }, [2]);
-                    Plotly.extendTraces(chartIdx, { y: [[val4]] }, [3]);
+
+                    iaqDivValue.innerHTML = val2;
+                    Plotly.extendTraces(iaqDiv, { y: [[val2]] }, [0]);
+                    
+                    co2DivValue.innerHTML = val4;
+                    Plotly.extendTraces(co2Div, { y: [[val4]] }, [0]);
+
                     cnt = sensorTypes[sensor].value;
                     sensorTypes[sensor].value = cnt + 1;
                 }
 
-                if (cnt > 150) {
-                    Plotly.relayout(chartIdx, {
+                if (cnt > 64) {
+                    Plotly.relayout(iaqDiv, {
                         xaxis: {
-                            range: [cnt - 150, cnt]
+                            range: [cnt - 64, cnt]
+                        }
+                    });
+                    Plotly.relayout(co2Div, {
+                        xaxis: {
+                            range: [cnt - 64, cnt]
                         }
                     });
                 }
@@ -837,7 +955,7 @@
         }
 
         parse_scheme.forEach(element => {
-            console.log(element);
+            //console.log(element);
             var name = element['name'];
             var valueType = element['type'];
             var scale = element['scale-factor'];
@@ -876,7 +994,7 @@
                 value = geActivityString(value);
             }
             result = result + element.name + ": " + value + "   ";
-            console.log(dataIndex);
+            //console.log(dataIndex);
             dataIndex += size;
 
         });

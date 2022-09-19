@@ -56,7 +56,7 @@
   },
 
   "13": {
-    "name": "GYROSCOPE",
+    "name": "gyroscope",
     "scheme": "xyz",
     "value": 0,
     "dashboard": 0
@@ -354,7 +354,7 @@
   },
 
   "128": {
-    "name": "TEMPERATURE",
+    "name": "temperature",
     "scheme": "singleRead",
     "parse-scheme": 
     [
@@ -366,7 +366,7 @@
   },
 
   "129": {
-    "name": "PRESSURE",
+    "name": "pressure",
     "scheme": "singleRead",
     "parse-scheme": 
     [
@@ -378,7 +378,7 @@
   },
 
   "130": {
-    "name": "HUMIDITY",
+    "name": "humidity",
     "scheme": "singleRead",
     "parse-scheme": 
     [
@@ -390,7 +390,7 @@
   },
 
   "131": {
-    "name": "GAS",
+    "name": "gas",
     "scheme": "singleRead",
     "parse-scheme": 
     [
