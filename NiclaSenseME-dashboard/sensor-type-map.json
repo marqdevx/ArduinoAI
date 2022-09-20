@@ -366,7 +366,7 @@
   },
 
   "129": {
-    "name": "pressure",
+    "name": "BAROMETER",
     "scheme": "singleRead",
     "parse-scheme": 
     [
@@ -414,7 +414,7 @@
   },
 
   "133": {
-    "name": "BAROMETER_WU",
+    "name": "pressure",
     "scheme": "singleRead",
     "parse-scheme": 
     [

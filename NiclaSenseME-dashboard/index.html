@@ -358,7 +358,7 @@
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
 
-    const sensors = [115, 130, 131, 129, 128, 4, 13, 34];
+    const sensors = [115, 130, 131, 129, 128, 133, 4, 13, 34];
 
     snack('IMPORTANT - first upload the Arduino_BHY2/app.ino sketch', 1)
     init3D();
@@ -1090,7 +1090,7 @@
         }
 
         parse_scheme.forEach(element => {
-            //console.log(element);
+            console.log(element);
             var name = element['name'];
             var valueType = element['type'];
             var scale = element['scale-factor'];
@@ -1109,10 +1109,10 @@
                 value = data.getInt16(dataIndex, true) * scale;
                 size = 2;
             } else if (valueType == "uint24") {
-                value = data.getUint16(dataIndex, true) + (data.getUint8(dataIndex + 2, true) << 16);
+                value = (data.getUint16(dataIndex, true) + (data.getUint8(dataIndex + 2, true) << 16)) * scale;
                 size = 3;
             } else if (valueType == "uint32") {
-                value = data.getUint16(dataIndex, true) + (data.getUint16(dataIndex + 2, true) << 16);
+                value = (data.getUint16(dataIndex, true) + (data.getUint16(dataIndex + 2, true) << 16)) * scale;
                 size = 4;
             } else if (valueType == "float") {
                 value = data.getFloat32(dataIndex, true) * scale;
